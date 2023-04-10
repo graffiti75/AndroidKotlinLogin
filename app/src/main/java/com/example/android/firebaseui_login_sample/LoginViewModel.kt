@@ -18,6 +18,7 @@ package com.example.android.firebaseui_login_sample
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.preference.PreferenceManager
 import kotlin.random.Random
 
@@ -46,6 +47,14 @@ class LoginViewModel : ViewModel() {
 	// TODO Create an authenticationState variable based off the FirebaseUserLiveData object. By
 	//  creating this variable, other classes will be able to query for whether the user is logged
 	//  in or not
+
+	val authenticationState = FirebaseUserLiveData().map { user ->
+		if (user != null) {
+			AuthenticationState.AUTHENTICATED
+		} else {
+			AuthenticationState.UNAUTHENTICATED
+		}
+	}
 
 	/**
 	 * Gets a fact to display based on the user's set preference of which type of fact they want
